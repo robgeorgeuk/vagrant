@@ -42,6 +42,8 @@ EOF
 
 echo "--- Enabling mod-rewrite ---"
 sudo a2enmod rewrite
+# Ensure rewrite rules work, replaces 2nd match only
+sudo sed -i ':a N;$!ba; s/AllowOverride None/AllowOverride All/2' /etc/apache2/sites-available/default
 
 echo "--- Setting document root ---"
 sudo rm -rf /var/www
@@ -50,8 +52,6 @@ sudo ln -fs /vagrant/public /var/www
 echo "--- What developer codes without errors turned on? Not you, master. ---"
 sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/apache2/php.ini
 sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/apache2/php.ini
-
-sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 echo "--- Set PHP Timezone ---"
 sed -i "s/;date.timezone =/date.timezone = \"Europe\/London\"/" /etc/php5/apache2/php.ini
