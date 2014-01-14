@@ -1,0 +1,4 @@
+vagrant
+=======
+
+My Vagrant setup
